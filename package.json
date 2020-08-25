@@ -1,0 +1,21 @@
+{
+  "name": "quizzer-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "niceFont",
+  "license": "MIT",
+  "scripts": {
+    "start:db": "docker container stop $(docker container ls -q --filter name=quizzer); docker build . -t quizzerdev:latest && docker run --rm -p 3311:3306 --name=quizzer -d quizzerdev:latest --default-authentication-plugin=mysql_native_password",
+    "start:server": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.1.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  }
+}
