@@ -1,12 +1,13 @@
 const mysql = require('mysql');
 const { promisify } = require('util');
+const dbCred = require('config').get('localDBCredentials');
 
 const pool = mysql.createPool({
-  host: '0.0.0.0',
-  port: 3311,
-  password: 'password',
-  user: 'user',
-  database: 'quizzer',
+  host: dbCred.host,
+  port: dbCred.port,
+  password: dbCred.password,
+  user: dbCred.user,
+  database: dbCred.database,
 });
 
 pool.getConnection((err, connection) => {
