@@ -10,16 +10,18 @@ const pool = mysql.createPool({
   database: dbCred.database,
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error(err);
+pool.getConnection = promisify(pool.getConnection).bind(pool);
+
+module.exports = async (_, res, next) => {
+  try {
+    const connection = await pool.getConnection();
+    connection.query = promisify(connection.query).bind(connection);
+    connection.beginTransaction = promisify(connection.beginTransaction).bind(connection);
+    connection.rollback = promisify(connection.rollback).bind(connection);
+    connection.commit = promisify(connection.commit).bind(connection);
+    res.locals.mysql = connection;
+    next();
+  } catch (error) {
+    console.error(error);
   }
-  if (connection) connection.release();
-});
-
-pool.query = promisify(pool.query).bind(pool);
-
-module.exports = (_, res, next) => {
-  res.locals.mysql = pool;
-  next();
 };
