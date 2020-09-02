@@ -17,9 +17,10 @@ const createQuiz = async (mysql, quiz) => {
 };
 
 const getQuiz = async (mysql, quizID) => {
+  console.log('request');
   const quiz = await mysql.query(`
     SELECT 
-      * 
+      name, description, question 
     FROM 
       quizzes 
     JOIN
@@ -29,13 +30,14 @@ const getQuiz = async (mysql, quizID) => {
     WHERE 
       questions.quiz_id = ? 
   `, [quizID]);
+  console.log('noresult end');
   if (!quiz.length) return undefined;
+  console.log('result end');
   return quiz.reduce((acc, item) => ({
     ...acc,
     questions: [...acc.questions,
       {
         question: item.question,
-        answer: item.answer,
       },
     ],
   }), {
