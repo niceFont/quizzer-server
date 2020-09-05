@@ -6,7 +6,17 @@ const create = async ({
   const quizID = await quizService.createQuiz(res.locals.mysql, body);
   return {
     status: 200,
-    quizID,
+    body: {
+      quizID,
+    },
+  };
+};
+
+const getResults = async ({ params, body }, res) => {
+  console.log(body);
+  const result = await quizService.calcResults(res.locals.mysql, { ...body, ...params });
+  return {
+    body: result,
   };
 };
 
@@ -14,8 +24,11 @@ const getByID = async ({
   params: { id },
 }, res) => {
   const quiz = await quizService.getQuiz(res.locals.mysql, id);
-  console.log(quiz);
-  if (quiz) return quiz;
+  if (quiz) {
+    return {
+      body: quiz,
+    };
+  }
   return {
     status: 204,
   };
@@ -23,4 +36,5 @@ const getByID = async ({
 module.exports = {
   getByID,
   create,
+  getResults,
 };

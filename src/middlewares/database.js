@@ -11,10 +11,12 @@ const pool = mysql.createPool({
 });
 
 pool.getConnection = promisify(pool.getConnection).bind(pool);
+let connection;
 
+pool.getConnection().then((conn) => { connection = conn; });
 module.exports = async (_, res, next) => {
   try {
-    const connection = await pool.getConnection();
+    console.log('GETTING DB CONN');
     connection.query = promisify(connection.query).bind(connection);
     connection.beginTransaction = promisify(connection.beginTransaction).bind(connection);
     connection.rollback = promisify(connection.rollback).bind(connection);

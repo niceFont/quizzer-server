@@ -18,9 +18,18 @@ CREATE TABLE quizzer.questions(
     quiz_id VARCHAR(12) NOT NULL,
     question_id VARCHAR(8) NOT NULL,
     question VARCHAR(255) NOT NULL,
+    type ENUM('choice', 'input') NOT NULL,
     answer VARCHAR(255) NOT NULL,
     PRIMARY KEY(quiz_id, question_id),
+    INDEX question_idx (question_id),
     FOREIGN KEY (quiz_id) REFERENCES quizzer.quizzes(quiz_id) ON DELETE CASCADE
 );
 
-INSERT INTO quizzer.users(user_id, username, email, password) VALUES ("5f443bb182f7d3e4dcbab536", "tester", "test@test.de", "password");
+CREATE TABLE quizzer.options(
+    option_id VARCHAR(8) NOT NULL,
+    option_value VARCHAR(255) NOT NULL,
+    question_id VARCHAR(8) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    PRIMARY KEY(option_id, question_id),
+    FOREIGN KEY (question_id) REFERENCES quizzer.questions(question_id) ON DELETE CASCADE
+)
