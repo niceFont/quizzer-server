@@ -16,11 +16,7 @@ let connection;
 pool.getConnection().then((conn) => { connection = conn; });
 module.exports = async (_, res, next) => {
   try {
-    console.log('GETTING DB CONN');
     connection.query = promisify(connection.query).bind(connection);
-    connection.beginTransaction = promisify(connection.beginTransaction).bind(connection);
-    connection.rollback = promisify(connection.rollback).bind(connection);
-    connection.commit = promisify(connection.commit).bind(connection);
     res.locals.mysql = connection;
     next();
   } catch (error) {
