@@ -3,6 +3,7 @@ const quizService = require('../services/quiz.js');
 const create = async ({
   body,
 }, res) => {
+  console.log(body);
   const quizID = await quizService.createQuiz(res.locals.mysql, body);
   return {
     status: 200,
@@ -13,7 +14,6 @@ const create = async ({
 };
 
 const getResults = async ({ params, body }, res) => {
-  console.log(body);
   const result = await quizService.calcResults(res.locals.mysql, { ...body, ...params });
   return {
     body: result,
