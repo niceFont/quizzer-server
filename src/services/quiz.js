@@ -38,10 +38,8 @@ const createQuiz = async (mysql, quiz) => {
       ],
     };
   }, { questionValues: [], optionValues: [] });
-  console.log(questionValues, optionValues);
   await mysql.beginTransaction();
   try {
-    console.log(questionValues, optionValues);
     await mysql.query('INSERT INTO quizzes(quiz_id, name, description) VALUES(?, ?, ?)', [quizID, quiz.name, quiz.description]);
     await mysql.query('INSERT INTO questions(quiz_id, question_id,question, answer, type) VALUES ?', [questionValues]);
     if (optionValues.length) {

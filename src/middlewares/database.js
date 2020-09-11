@@ -21,5 +21,6 @@ module.exports = async (_, res, next) => {
     next();
   } catch (error) {
     console.error(error);
+    process.exit(1);
   }
 };
