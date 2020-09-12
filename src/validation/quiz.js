@@ -21,7 +21,7 @@ const createQuiz = {
 
 const userAnswersSchema = Joi.object({
   id: Joi.string().length(8).required(),
-  answer: Joi.alternatives(Joi.string().max(254).required(), Joi.number().max(254).required()),
+  userAnswer: Joi.alternatives(Joi.string().max(254).required(), Joi.number().max(254).required()),
 });
 
 const getResults = {
