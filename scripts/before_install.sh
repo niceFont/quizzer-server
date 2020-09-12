@@ -1,3 +1,3 @@
 #!/bin/bash
-pkill node
-exit $?
+pkill node > /dev/null 2>&1
+exit 0
