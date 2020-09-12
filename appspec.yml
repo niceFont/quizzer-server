@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /quizzer-server
+    destination: /home/ubuntu/quizzer-server
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
